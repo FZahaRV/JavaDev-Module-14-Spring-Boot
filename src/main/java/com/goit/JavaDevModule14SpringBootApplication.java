@@ -12,6 +12,7 @@ public class JavaDevModule14SpringBootApplication {
 	public static void main(String[] args) {
 		ApplicationContext context = SpringApplication.run(JavaDevModule14SpringBootApplication.class, args);
 		NoteService noteService = context.getBean(NoteService.class);
+//		SpringApplication.run(JavaDevModule14SpringBootApplication.class, args);
 		testNoteService(noteService);
 	}
 
@@ -31,5 +32,10 @@ public class JavaDevModule14SpringBootApplication {
 		noteService.deleteById(note.getId());
 		System.out.println("Deleted note with id " + note.getId());
 		System.out.println("All notes after deletion: " + noteService.listAll());
+		noteService.add(note);
+		Note note2 = new Note();
+		note2.setContent("dgsdgsdg");
+		note2.setTitle("fghdhfdh");
+		noteService.add(note2);
 	}
 }
