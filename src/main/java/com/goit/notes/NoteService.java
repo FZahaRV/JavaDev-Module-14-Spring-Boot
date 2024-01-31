@@ -1,52 +1,48 @@
 package com.goit.notes;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class NoteService {
-    private final Map<Long, Note> notes = new HashMap<>();
-    private final AtomicLong idGenerator = new AtomicLong();
-
+    private final NoteRepository repository;
     public List<Note> listAll() {
-        return new ArrayList<>(notes.values());
+        return new ArrayList<>(repository.findAll());
     }
 
-    public Note add(Note note) {
-        long id = generateUniqueId();
-        note.setId(id);
-        notes.put(id, note);
-        return note;
+    public Note create(Note note) {
+        if(note == null) {
+            throw new RuntimeException("Note is null");
+        } else {
+            return repository.save(note);
+        }
     }
 
     public void deleteById(long id) {
-        if (!notes.containsKey(id)) {
+        if (!repository.existsById(id)) {
             throw new RuntimeException("Note with id " + id + " not found");
+        } else {
+            repository.deleteById(id);
         }
-        notes.remove(id);
     }
 
     public void update(Note note) {
         long id = note.getId();
-        if (!notes.containsKey(id)) {
+        if (!repository.existsById(id)) {
             throw new RuntimeException("Note with id " + id + " not found");
+        } else {
+            repository.save(note);
         }
-        notes.put(id, note);
     }
 
-    public Note getById(long id) {
-        if (!notes.containsKey(id)) {
+    public Optional<Note> getById(long id) {
+        if (!repository.existsById(id)) {
             throw new RuntimeException("Note with id " + id + " not found");
+        } else {
+            return repository.findById(id);
         }
-        return notes.get(id);
-    }
-
-    private long generateUniqueId() {
-        return idGenerator.incrementAndGet();
     }
 }
