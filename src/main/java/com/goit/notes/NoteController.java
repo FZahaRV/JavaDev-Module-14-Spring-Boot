@@ -1,6 +1,7 @@
 package com.goit.notes;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.ParameterResolutionDelegate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -46,7 +47,7 @@ public class NoteController {
 
     @PostMapping("/edit")
     public String editNote(@ModelAttribute("note") Note updateNote) {
-        noteService.update(updateNote);
+        noteService.saveOrUpdate(updateNote);
         return "redirect:/note/list";
     }
 

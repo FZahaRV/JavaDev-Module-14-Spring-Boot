@@ -1,5 +1,6 @@
 package com.goit.notes;
 
+import com.goit.users.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

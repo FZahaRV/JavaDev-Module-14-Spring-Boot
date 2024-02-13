@@ -9,3 +9,5 @@ INSERT INTO notes (title, content) VALUES
 ('Note 8', 'Content of Note 8'),
 ('Note 9', 'Content of Note 9'),
 ('Note 10', 'Content of Note 10');
+
+INSERT INTO users (username, password) VALUES ('user', '{noop}jdbcDefault');
